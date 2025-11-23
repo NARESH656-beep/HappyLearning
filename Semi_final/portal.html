@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Office Portal - Enhanced Demo</title>
+  <style>
+    body { font-family: Arial, Helvetica, sans-serif; margin: 18px; color:#222; }
+    header { margin-bottom: 12px; }
+    nav a { margin-right: 12px; text-decoration:none; color:#0066cc; font-weight:600; }
+    .card { border: 1px solid #ddd; padding: 12px; border-radius: 8px; margin-bottom: 12px; max-width:1100px; }
+    .grid { display:flex; gap:12px; }
+    .col { flex:1; }
+    button { padding:8px 10px; margin-top:6px; }
+    .small{ color:#666; font-size:0.9em; }
+    img.demo { max-width:420px; border-radius:6px; margin-top:8px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Company Portal (Local Demo)</h1>
+    <p class="small">This is a local demo portal. Your interactions (clicks, nav, scroll, button clicks) will be logged for analysis.</p>
+  </header>
+
+  <nav>
+    <a href="#emp">Employee Details</a>
+    <a href="#hr">HR Policies</a>
+    <a href="#leave">Leave Application</a>
+    <a href="#about">About Company</a>
+    <a href="#business">Business Overview</a>
+    <a href="#help">Help</a>
+  </nav>
+
+  <section id="emp" class="card">
+    <h2>Employee Details</h2>
+    <div class="grid">
+      <div class="col">
+        <p>View and update your profile (demo).</p>
+        <button onclick="clientLog('click','edit_profile')">Edit Profile</button>
+      </div>
+      <div class="col">
+        <p>Example screenshot:</p>
+        <img class="demo" src="file:///mnt/data/12963430-c73a-46ba-8baa-19480aa2ecb7.png" alt="example">
+      </div>
+    </div>
+  </section>
+
+  <section id="hr" class="card">
+    <h2>HR Policies</h2>
+    <ul>
+      <li>Working hours: 9am - 6pm</li>
+      <li>Leave encashment policy: Demo</li>
+      <li>Code of Conduct: Demo</li>
+    </ul>
+  </section>
+
+  <section id="leave" class="card">
+    <h2>Leave Application</h2>
+    <label>From: <input id="leave_from" type="date" /></label>
+    <label>To: <input id="leave_to" type="date" /></label>
+    <p><button onclick="submitLeave()">Apply</button></p>
+  </section>
+
+  <section id="about" class="card">
+    <h2>About Company</h2>
+    <p>Short demo paragraph about business and mission.</p>
+  </section>
+
+  <section id="business" class="card">
+    <h2>Business Overview</h2>
+    <p>Products, services, and demo content.</p>
+  </section>
+
+  <section id="help" class="card">
+    <h2>Help</h2>
+    <p>If finished, click End Session to notify the tracker and stop the session (app will still keep running until you save/exit).</p>
+    <p><button onclick="endSession()">End Session</button></p>
+  </section>
+
+  <footer class="small">
+    <p>Local demo portal — close this tab when finished. Then use the app Dashboard to Save/Export the activity logs.</p>
+  </footer>
+
+<script>
+const logEndpoint = "/log_event";
+
+// send basic event to server via GET (simple and works with our server)
+function clientLog(type, detail, x=null, y=null){
+  const payload = {
+    type: type,
+    detail: detail,
+    x: x,
+    y: y
+  };
+  const q = "payload=" + encodeURIComponent(JSON.stringify(payload));
+  navigator.sendBeacon ? navigator.sendBeacon(logEndpoint + "?" + q) : fetch(logEndpoint + "?" + q).catch(e => {});
+}
+
+// log link navigation (hash change)
+window.addEventListener("hashchange", function(){
+  clientLog("nav", "hash="+location.hash);
+});
+
+document.querySelectorAll("a").forEach(a=>{
+  a.addEventListener("click", function(e){
+    clientLog("link_click", "href="+(this.getAttribute("href")||""));
+  });
+});
+
+// log button clicks (global)
+document.addEventListener("click", function(e){
+  const t = e.target;
+  if(t.tagName === 'BUTTON'){
+    clientLog("button_click", "text="+(t.innerText||""));
+  }
+});
+
+// scroll depth: send once per 2 seconds if scrolled
+let lastScroll = 0;
+let scrollTimer = null;
+window.addEventListener("scroll", function(){
+  lastScroll = window.scrollY || window.pageYOffset;
+  if(scrollTimer) return;
+  scrollTimer = setTimeout(function(){
+    clientLog("scroll", "pos="+lastScroll, null, lastScroll);
+    scrollTimer = null;
+  }, 1000);
+});
+
+// leave submit
+function submitLeave(){
+  clientLog("leave_apply", "from="+document.getElementById('leave_from').value + "|to="+document.getElementById('leave_to').value);
+  alert("Leave applied (demo)");
+}
+
+// end session
+function endSession(){
+  clientLog("session_end", "user_clicked_end");
+  alert("Session end recorded. Return to app and use Dashboard to save/export.");
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Office Portal - Colorful Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <style>
+    :root{
+      --brand-orange:#ff9900;
+      --brand-deep:#ff6f00;
+      --accent-green:#0a7a5f;
+      --card-bg: linear-gradient(180deg, #f6fffb, #ffffff);
+    }
+    body { font-family: "Segoe UI", Roboto, Arial; margin:0; color:#222; background:#f2f5f7;}
+    header { background: linear-gradient(90deg, var(--brand-orange), var(--brand-deep)); color:white; padding:14px 20px; display:flex; align-items:center; }
+    header img { height:34px; margin-right:14px; border-radius:4px; }
+    header h1 { font-size:20px; margin:0; letter-spacing:0.5px; }
+    header .right { margin-left:auto; font-size:14px; opacity:0.95; }
+    nav { background:#fff; padding:10px 20px; display:flex; gap:12px; box-shadow:0 1px 0 rgba(0,0,0,0.04); }
+    nav a { color: #0066cc; text-decoration:none; font-weight:600; padding:8px 10px; border-radius:6px; }
+    nav a:hover { background:#f3f6fb; }
+    .container { max-width:1200px; margin:20px auto; padding:0 16px; }
+    .hero { background: linear-gradient(90deg,#0aa376,#00c9a7); color:white; padding:28px; border-radius:10px; display:flex; gap:18px; align-items:center; }
+    .hero .left { flex:1; }
+    .hero .right { width:420px; }
+    .card-row { display:flex; gap:16px; margin-top:18px; }
+    .card { background:var(--card-bg); border-radius:10px; padding:12px; flex:1; box-shadow:0 6px 18px rgba(10,10,10,0.04); }
+    .card h3 { margin-top:0; }
+    .grid-2 { display:flex; gap:12px; }
+    button { background:var(--brand-orange); color:white; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; }
+    button.secondary { background:#eee; color:#333; }
+    .small { font-size:13px; color:#444; }
+    footer { margin:28px 0 50px; text-align:center; color:#666; }
+    img.demo { max-width:100%; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.06); }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='24'><rect width='48' height='24' fill='%23ffffff'/></svg>" alt="logo">
+    <h1>Company Portal — Demo</h1>
+    <div class="right">Hello, demo user &nbsp; • &nbsp; <span style="font-weight:700">Portal</span></div>
+  </header>
+
+  <nav>
+    <a href="#emp">Employee Details</a>
+    <a href="#hr">HR Policies</a>
+    <a href="#leave">Leave Application</a>
+    <a href="#about">About</a>
+    <a href="#business">Business</a>
+    <a href="#help">Help</a>
+  </nav>
+
+  <div class="container">
+    <div class="hero">
+      <div class="left">
+        <h2 style="margin:0 0 8px 0">Welcome to the Office Portal</h2>
+        <p class="small">This colorful demo simulates an internal portal. Your interactions here will be logged for analysis. Use the navigation links, click buttons, scroll — everything is recorded with descriptions.</p>
+        <p style="margin-top:12px;"><button onclick="clientLog('cta','open_dashboard')">Open Dashboard</button></p>
+      </div>
+      <div class="right">
+        <img class="demo" src="file:///mnt/data/fc5198f3-87df-4ea8-8da1-cffee51ad570.png" alt="demo" />
+      </div>
+    </div>
+
+    <div class="card-row">
+      <div class="card">
+        <h3>Employee Details</h3>
+        <p class="small">View and update profile information.</p>
+        <div class="grid-2">
+          <div>
+            <p><strong>Name</strong><br/>Demo User</p>
+            <p><strong>Role</strong><br/>Product</p>
+            <button onclick="clientLog('button_click','edit_profile')">Edit Profile</button>
+          </div>
+          <div>
+            <p class="small">Profile picture (demo)</p>
+            <img class="demo" src="file:///mnt/data/fc5198f3-87df-4ea8-8da1-cffee51ad570.png" alt="profile" />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>HR Policies</h3>
+        <ul>
+          <li>Working hours: 9am - 6pm</li>
+          <li>Leave policy: Demo</li>
+          <li>Code of conduct: Demo</li>
+        </ul>
+        <button onclick="clientLog('button_click','download_policy')">Download Policy (demo)</button>
+      </div>
+    </div>
+
+    <div style="display:flex; gap:16px; margin-top:16px;">
+      <div class="card" style="flex:2">
+        <h3>Leave Application</h3>
+        <p class="small">Apply for leave using the form below.</p>
+        <label>From: <input id="from" type="date"/></label>
+        <label>To: <input id="to" type="date"/></label>
+        <p><button onclick="applyLeave()">Apply</button></p>
+      </div>
+
+      <div class="card" style="flex:1">
+        <h3>Quick Links</h3>
+        <p><a href="#emp" onclick="clientLog('link_click','emp')">Employee Details</a></p>
+        <p><a href="#hr" onclick="clientLog('link_click','hr')">HR Policies</a></p>
+        <p><a href="#leave" onclick="clientLog('link_click','leave')">Leave</a></p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;">
+      <h3>Business Overview</h3>
+      <p class="small">Short demo content about company strategy and highlights. Scroll to see scroll logging in action.</p>
+      <div style="height:380px; overflow:auto; border-radius:6px; padding:8px;">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer euismod.</p>
+        <p>... (repeat content to make scroll) ...</p>
+        <p>Phasellus at arcu eget velit hendrerit facilisis. Suspendisse potenti.</p>
+        <p>Vivamus laoreet, nunc vitae dictum semper, mi lorem gravida risus, id malesuada lorem arcu a risus.</p>
+        <p>End of demo content.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;"></div>
+
+    <footer>
+      <p class="small">Close this tab when finished. Then go back to the app and click "End Session & Save" to export multiple Excel files with descriptions.</p>
+    </footer>
+  </div>
+
+<script>
+const logEndpoint = "/log_event";
+
+function sendPayload(payload){
+  const q = "payload=" + encodeURIComponent(JSON.stringify(payload));
+  // use sendBeacon if available for reliability on unload
+  if(navigator.sendBeacon){
+    navigator.sendBeacon(logEndpoint + "?" + q);
+  } else {
+    fetch(logEndpoint + "?" + q).catch(()=>{});
+  }
+}
+
+function clientLog(type, detail, x=null, y=null){
+  const payload = { type: type, detail: detail, x: x, y: y };
+  sendPayload(payload);
+}
+
+// link click logging
+document.querySelectorAll("a").forEach(a=>{
+  a.addEventListener("click", function(e){
+    clientLog("link_click", (this.getAttribute("href")||""));
+  });
+});
+
+function applyLeave(){
+  const from = document.getElementById('from').value;
+  const to = document.getElementById('to').value;
+  clientLog("leave_apply", `from=${from}|to=${to}`);
+  alert("Leave applied (demo)");
+}
+
+// scroll logging: sample every 800ms while scrolling
+let scrollTimer = null;
+window.addEventListener("scroll", function(){
+  if(scrollTimer) return;
+  scrollTimer = setTimeout(function(){
+    const pos = window.scrollY || window.pageYOffset;
+    clientLog("scroll", "pos=" + pos, null, pos);
+    scrollTimer = null;
+  }, 800);
+});
+
+// global button clicks
+document.addEventListener("click", function(e){
+  const t = e.target;
+  if(t.tagName === 'BUTTON'){
+    clientLog("button_click", (t.innerText||''));
+  }
+});
+
+// on unload: send session_end
+window.addEventListener("beforeunload", function(){
+  clientLog("session_end", "tab_closed");
+});
+</script>
+</body>
+</html>

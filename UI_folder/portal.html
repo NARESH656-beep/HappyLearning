@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Office Portal - Local Demo</title>
+  <style>
+    body { font-family: Arial, Helvetica, sans-serif; margin: 24px; color:#222; }
+    header { margin-bottom: 18px; }
+    .card { border: 1px solid #ddd; padding: 12px; border-radius: 8px; margin-bottom: 14px; max-width:900px; }
+    nav a { margin-right: 12px; text-decoration:none; color:#0066cc; }
+    .small { color:#666; font-size:0.9em; }
+    img.demo { max-width:420px; display:block; margin-top:8px; border-radius:6px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Company Portal (Local Demo)</h1>
+    <p class="small">This is a locally served demo portal. Your mouse/keyboard/idle activity will be recorded by the tracker app (activity_log.xlsx).</p>
+  </header>
+
+  <nav>
+    <a href="#emp">Employee Details</a>
+    <a href="#hr">HR Policies</a>
+    <a href="#leave">Leave Application</a>
+    <a href="#about">About Company</a>
+    <a href="#business">Business Overview</a>
+  </nav>
+
+  <section id="emp" class="card">
+    <h2>Employee Details</h2>
+    <p>View and update your profile information here (demo).</p>
+    <p><button onclick="alert('Edit profile (demo)')">Edit Profile</button></p>
+    <!-- example image: using the uploaded file path you provided -->
+    <img class="demo" src="file:///mnt/data/12963430-c73a-46ba-8baa-19480aa2ecb7.png" alt="example screenshot">
+  </section>
+
+  <section id="hr" class="card">
+    <h2>HR Policies</h2>
+    <ul>
+      <li>Working hours: 9am - 6pm</li>
+      <li>Leave encashment policy: Demo</li>
+      <li>Code of Conduct: Demo</li>
+    </ul>
+  </section>
+
+  <section id="leave" class="card">
+    <h2>Leave Application</h2>
+    <label>From: <input type="date" /></label>
+    <label>To: <input type="date" /></label>
+    <p><button onclick="alert('Leave application submitted (demo)')">Apply</button></p>
+  </section>
+
+  <section id="about" class="card">
+    <h2>About Company</h2>
+    <p>Short demo paragraph about business and mission.</p>
+  </section>
+
+  <section id="business" class="card">
+    <h2>Business Overview</h2>
+    <p>Products, services, and demo content.</p>
+  </section>
+
+  <footer class="small">
+    <p>Local demo portal — close this tab when finished. Then click "Save Activity Log" in the app to persist recorded events.</p>
+  </footer>
+</body>
+</html>
